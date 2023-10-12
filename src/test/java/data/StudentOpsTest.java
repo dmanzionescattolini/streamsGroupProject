@@ -38,5 +38,16 @@ public class StudentOpsTest {
             List<Student> filteredStudents = StudentOps.filterStudentsByGender(students, "Female");
             assertEquals("Female",filteredStudents.get(5).getGender());
         }
+        
+        @Test
+    	void testSortStudentsByAge() {
+    		List<Student> studentsSortedByAge = StudentOps.sortStudentsByAge(students);
+    		
+    		studentsSortedByAge.stream().map(x->x.getDob()).toList().forEach(x->{
+    			System.out.println(x);
+    		});;
+    		assertTrue(studentsSortedByAge.get(0).getDob().isAfter(studentsSortedByAge.get(studentsSortedByAge.size()-1).getDob()));
+    	}
+        
     }
 
