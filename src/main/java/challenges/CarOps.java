@@ -1,5 +1,6 @@
 package challenges;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -7,12 +8,14 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import data.FetchData;
 import domain.Car;
 import util.ComparatorCarsByPriceAscending;
 import util.ComparatorCarsByPriceDescending;
 import util.ComparatorCarsByYearAscending;
 
 public class CarOps {
+
 
     //question 21
     public static List<Car> filterByMake(List<Car> cars,String make){
@@ -65,8 +68,8 @@ public class CarOps {
     //question 30
 
 
-    public static List<Car> groupByMake(List<Car> cars){
-        return (List<Car>)cars.stream().collect(Collectors.groupingBy(x->x.getMake()));
+    public static Map<String,List<Car>> groupByMake(List<Car> cars){
+        return cars.stream().collect(Collectors.groupingBy(x->x.getMake()));
     }
 
     //question 31
