@@ -1,16 +1,22 @@
 package challenges;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import data.FetchData;
 import domain.Car;
 import util.ComparatorCarsByPriceAscending;
 import util.ComparatorCarsByPriceDescending;
 import util.ComparatorCarsByYearAscending;
 
 public class CarOps {
-
+    public static void main(String[] args) throws IOException {
+       List<List<Car>> cars = CarOps.partitionCarsIntoAboveAndBelowNPrice(FetchData.getCarList(), 50_000);
+        System.out.println(cars.get(0));
+        System.out.println(cars.get(1));
+    }
     //	41.Find First Car: Find the first car in the list.
 //	42.Find Any Car: Find any car in the list.
 //	43.Remove Duplicates: Remove duplicate cars from the list based on make and model.
@@ -42,8 +48,10 @@ public class CarOps {
         }).toList();
     }
 
-    public static List<Car> partitionCarsIntoAboveAndBelowNPrice(List<Car> cars, double N){
-        return cars.stream().
+    public static List<List<Car>> partitionCarsIntoAboveAndBelowNPrice(List<Car> cars, double N){
+        return Arrays.asList(cars.stream().filter(x->x.getPrice()<=N).toList(),cars.stream().filter(x->x.getPrice()>N).toList());
     }
+
+
 
 }
