@@ -53,5 +53,8 @@ public class CarOps {
     }
 
 
+    public static calculateTotalPriceByMake(List<Car> cars){
+        Map<String, >
+    }
 
 }
