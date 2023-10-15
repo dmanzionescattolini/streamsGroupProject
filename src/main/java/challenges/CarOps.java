@@ -130,16 +130,7 @@ public class CarOps {
         return cars.stream().map(x->x.getMake()+ " " + x.getModel()).distinct().toList();
     }
 
-//	41.Find First Car: Find the first car in the list.
-//	42.Find Any Car: Find any car in the list.
-//	43.Remove Duplicates: Remove duplicate cars from the list based on make and model.
-//	44.Partition Cars by Price: Partition the cars into two groups based on whether their price is above a certain value.
-//	45.Calculate Total Price by Make: Calculate the total price of cars for each make.
-//	46.Join Car Names into a String: Join the names of all cars into a single comma-separated string.
-//	47.Peek and Print: Use peek to print the details of each car in the stream.
-//	48.Average Price by Make: Calculate the average price of cars for each make.
-//	49.Concatenate All Car Details: Concatenate all car details into a single string.
-//	50.Find the Newest Car: Find the newest (latest year) car in the list.
+
 
 
 }
