@@ -1,5 +1,6 @@
 package challenges;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,10 +108,28 @@ public class CarOps {
 
 //	36.None Match the Condition: Check if none of the cars match a specific condition.
 
+    public static boolean noneMatchTheCondition(List<Car> cars, Predicate<Car> condition){
+        return cars.stream().noneMatch(condition);
+    }
+
 //	37.Skip First N Cars: Skip the first N cars from the list.
+    public static List<Car> skipTheFirstNCars(List<Car> cars, int n){
+        return cars.stream().skip(n).toList();
+
+    }
 //	38.Limit to N Cars: Limit the list to the first N cars.
+    public static List<Car> limitToNCars(List<Car> cars, int n){
+        return cars.stream().limit(n).toList();
+    }
 //	39.Distinct Colors: Get a list of distinct car colors.
+    public static List<String> distinctColors(List<Car> cars){
+        return cars.stream().map(x->x.getColor()).distinct().toList();
+    }
 //	40.Concatenate Make and Model: Concatenate the make and model of each car.
+    public static List<String> concatenateMakeAndModel(List<Car> cars){
+        return cars.stream().map(x->x.getMake()+ " " + x.getModel()).distinct().toList();
+    }
+
 //	41.Find First Car: Find the first car in the list.
 //	42.Find Any Car: Find any car in the list.
 //	43.Remove Duplicates: Remove duplicate cars from the list based on make and model.
