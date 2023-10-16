@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class StudentOps {
@@ -59,11 +60,73 @@ public class StudentOps {
     
     //Q9
     public static boolean checkIfAnyStudentIsAdult(List<Student> students) {
-    	return students.stream().map(s->s.getDob().until(LocalDate.now())).map(p->12*p.getYears()+p.getMonths()).anyMatch(a->a>18);
+    	return students.stream().map(s->s.getDob().until(LocalDate.now())).map(p->12*p.getYears()+p.getMonths()).anyMatch(a->a>18*12);
     }
     
     //Q10
     public static Map<String,Long> countStudentsByGender(List<Student> students){
     	return students.stream().collect(Collectors.groupingBy(Student::getGender,Collectors.counting()));
     }
+    
+    //Q11
+    public static Student findYoungestFemaleStudent(List<Student> students) {
+    	return students.stream().filter(s->s.getGender().equalsIgnoreCase("Female")).max(Comparator.comparing(Student::getDob)).orElseGet(null);
+    }
+    
+    //Q12
+    public static String joinStudentNames(List<Student> students) {
+    	return students.stream().map(Student::getFirst_name).reduce("",(a,b)->a+b);
+    }
+    
+    //Q13
+    public static double calculateAgeSum(List<Student> students) {
+    	return students.stream().map(s->s.getDob().until(LocalDate.now())).map(p->12*p.getYears()+p.getMonths()).reduce(0,Integer::sum)/12.0;
+    }
+    
+    //Q14
+    public static boolean checkIfAllStudentsAreAdults(List<Student> students) {
+    	return students.stream().map(s->s.getDob().until(LocalDate.now())).map(p->12*p.getYears()+p.getMonths()).allMatch(a->a>18*12);
+    }
+    
+    //Q15
+    public static Student findOldestStudent(List<Student> students) {
+    	return students.stream().min(Comparator.comparing(Student::getDob)).orElseGet(null);
+    }
+    
+    //Q16
+    //Since I can't change student names, I assume you just want a list returned?
+    public static List<String> convertToUppercase(List<Student> students){
+    	//students.stream().forEach(s->s.setFirst_name(s.getFirst_name().toUpperCase()));
+    	return students.stream().map(s->s.getFirst_name().toUpperCase()).toList();
+    }
+    
+    //Q17
+    public static Student findStudentById(List<Student> students, int id) {
+    	return students.stream().filter(s->s.getId()==id).findFirst().orElse(null);
+    }
+    
+    //Helper function for 18 and 19
+    public static int getAge(Student s) {
+    	return LocalDate.now().getYear() - s.getDob().getYear();
+    }
+    
+    //Q18
+    public static Map<Integer,Long> computeAgeDistribution(List<Student> students){
+    	return students.stream().collect(Collectors.groupingBy(s->LocalDate.now().getYear() - s.getDob().getYear(),Collectors.counting()));
+    	//return students.stream().collect(Collectors.groupingBy(s->StudentOps.getAge(s),Collectors.counting()));
+    }
+    
+    //Q19
+    //I'm going to round down to the nearest year, so there's Some overlap
+    public static Map<Integer,List<Student>> groupStudentsByAge(List<Student> students){
+    	return students.stream().collect(Collectors.groupingBy(s->LocalDate.now().getYear() - s.getDob().getYear(),Collectors.toList()));
+    	//return students.stream().collect(Collectors.groupingBy(s->StudentOps.getAge(s),Collectors.toList()));
+    }
+    
+    //Q20
+    public static double calculateAgeStandardDeviation(List<Student> students) {
+    	double avg = StudentOps.calculateAverageAge(students);
+    	return Math.sqrt(students.stream().map(s->s.getDob().until(LocalDate.now())).map(p->p.getYears()+p.getMonths()/12.0 - avg).collect(Collectors.averagingDouble((p-> Math.pow(p,2)))));
+    }
+    
 }
