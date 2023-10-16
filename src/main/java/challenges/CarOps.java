@@ -16,24 +16,27 @@ import util.ComparatorCarsByYearAscending;
 
 public class CarOps {
 
-
-    //question 21
+    public static void main(String[] args) throws IOException {
+        System.out.println(mapToCarMake(FetchData.getCarList()));
+    }
+    //question 21 Filter by Make: Filter the list of cars to only include cars with a specific make.
     public static List<Car> filterByMake(List<Car> cars,String make){
 
         return cars.stream().filter(x-> x.getMake().equals(make)).toList();
+
     }
 
-    //question 22
+    //question 22 Filter by Year: Filter the list of cars to only include cars from a specific year.
     public static List<Car> filterByYear(List<Car>cars, int year){
         return cars.stream().filter(x-> x.getYear()==year).toList();
     }
 
-    //question 23
-    public static List<Car> filterByPrice(List<Car> cars, double price){
-        return cars.stream().filter(x-> x.getPrice().equals(price)).toList();
+    //question 23    Filter by Price: Filter the list of cars to only include cars within a price range.
+    public static List<Car> filterByPrice(List<Car> cars, double lowestPrice, double highestPrice){
+        return cars.stream().filter(x-> x.getPrice()>=lowestPrice && x.getPrice()<=highestPrice).toList();
     }
 
-    //question 24
+    //question 24  Map to Model Names: Create a list of car model names from the list of cars.
     public static List<String> mapToModelNames(List<Car> cars){
         return cars.stream().map(x->x.getModel()).distinct().toList();
     }
