@@ -36,7 +36,7 @@ public class CarOpsFaraz {
             Map<String, List<Car>> carsByMake = CarOpsDonato.groupByMake(cars);
             Map<String, Double> totalPriceByMake = new HashMap<>();
             carsByMake.forEach((make, carz)->{
-                totalPriceByMake.put(make, sumOfPrices(carz));
+                totalPriceByMake.put(make, CarOpsDonato.sumOfPrices(carz));
             });
             return totalPriceByMake;
     }
@@ -51,7 +51,7 @@ public class CarOpsFaraz {
 
     public static Map<String,Double> averagePricePerMake(List<Car> cars){
         Map<String, Double> averagePrices = new HashMap<>();
-        groupByMake(cars).forEach((make, carz)-> {
+        CarOpsDonato.groupByMake(cars).forEach((make, carz)-> {
             averagePrices.put(make, carz.stream().map(x -> x.getPrice()).reduce((acc, next) -> (acc + next) / 2).orElse(0.00));
         });
                         return averagePrices;
