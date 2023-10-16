@@ -1,12 +1,19 @@
 package challenges;
 
+import java.io.IOException;
+import java.sql.Array;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import data.FetchData;
 import domain.Car;
 
 public class CarOpsFaraz {
 
-
+    public static void main(String[] args) throws IOException {
+       System.out.println(CarOpsFaraz.joinCarNamesIntoAString(FetchData.getCarList()));
+    }
     public static Car findFirstCar(List<Car> cars){
         return cars.stream().findFirst().orElseThrow();
     }
@@ -16,19 +23,16 @@ public class CarOpsFaraz {
     }
 
     public static List<Car> removeDuplicatesBasedOnMakeAndModel(List<Car> cars){
-        List<List<String>> makeAndModel = new ArrayList<>();
-        return cars.stream().filter(x->{
-           if(!makeAndModel.contains(Arrays.asList(x.getMake(),x.getModel()))){
-               makeAndModel.add(Arrays.asList(x.getMake(),x.getModel()));
-               return true;
-           }else {
-               return false;
-           }
-        }).toList();
+        List<Car> uniqueCarsBasedOnMakeAndModel = new ArrayList<>();
+        Map<String, List<Car>> makeAndModelToCarsMap = cars.stream().collect(Collectors.groupingBy(car->car.getMake()+ " " + car.getModel()));
+        makeAndModelToCarsMap.forEach((makeAndModel,carz)->{
+            uniqueCarsBasedOnMakeAndModel.add(carz.get(0));
+        });
+        return uniqueCarsBasedOnMakeAndModel;
     }
 
     public static List<List<Car>> partitionCarsIntoAboveAndBelowNPrice(List<Car> cars, double N){
-        return Arrays.asList(cars.stream().filter(x->x.getPrice()<=N).toList(),cars.stream().filter(x->x.getPrice()>N).toList());
+        return Arrays.asList(cars.stream().filter(x->x.getPrice()<N).toList(),cars.stream().filter(x->x.getPrice()>N).toList());
     }
 
 
@@ -42,17 +46,17 @@ public class CarOpsFaraz {
     }
 
     public static String joinCarNamesIntoAString(List<Car> cars){
-        return cars.stream().map(car-> car.getMake() + " " + car.getModel() + " " + car.getYear()).distinct().reduce((acc, car)->acc + ", " + car).orElse("EMPTY");
+        return cars.stream().map(car-> car.getMake() + " " + car.getModel() + " " + car.getYear()).reduce((acc, car)->acc + ", " + car).orElse("EMPTY");
     }
 
-    public static List<Car> peekAndPrint(List<Car> cars){
-       return cars.stream().peek(x-> System.out.println(x)).toList();
+    public static void peekAndPrint(List<Car> cars){
+        cars.stream().peek(x-> System.out.println(x)).close();
     }
 
     public static Map<String,Double> averagePricePerMake(List<Car> cars){
         Map<String, Double> averagePrices = new HashMap<>();
         CarOpsDonato.groupByMake(cars).forEach((make, carz)-> {
-            averagePrices.put(make, carz.stream().map(x -> x.getPrice()).reduce((acc, next) -> (acc + next) / 2).orElse(0.00));
+            averagePrices.put(make, carz.stream().mapToDouble(x -> x.getPrice()).average().getAsDouble());
         });
                         return averagePrices;
         };

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import data.FetchData;
 import domain.Car;
+import util.ComparatorCarsByMake;
 import util.ComparatorCarsByPriceAscending;
 import util.ComparatorCarsByPriceDescending;
 import util.ComparatorCarsByYearAscending;
@@ -137,5 +138,10 @@ public class CarOpsDonato {
 
 
 
+
+    //extra
+    public static List<Car> sortByMakeThenModel(List<Car> cars){
+        return cars.stream().sorted(new ComparatorCarsByMake()).toList();
+    }
 
 }
