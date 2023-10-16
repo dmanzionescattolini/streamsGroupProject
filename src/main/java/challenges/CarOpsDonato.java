@@ -1,7 +1,6 @@
 package challenges;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,7 @@ import util.ComparatorCarsByPriceAscending;
 import util.ComparatorCarsByPriceDescending;
 import util.ComparatorCarsByYearAscending;
 
-public class CarOps {
+public class CarOpsDonato {
 
     public static void main(String[] args) throws IOException {
         System.out.println(concatenateMakeAndModel(FetchData.getCarList()));
