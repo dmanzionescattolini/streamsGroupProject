@@ -17,7 +17,7 @@ import util.ComparatorCarsByYearAscending;
 public class CarOps {
 
     public static void main(String[] args) throws IOException {
-        System.out.println(mapToCarMake(FetchData.getCarList()));
+        System.out.println(concatenateMakeAndModel(FetchData.getCarList()));
     }
     //question 21 Filter by Make: Filter the list of cars to only include cars with a specific make.
     public static List<Car> filterByMake(List<Car> cars,String make){
