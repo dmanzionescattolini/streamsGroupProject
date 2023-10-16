@@ -11,9 +11,7 @@ import domain.Car;
 
 public class CarOpsFaraz {
 
-    public static void main(String[] args) throws IOException {
-       System.out.println(CarOpsFaraz.joinCarNamesIntoAString(FetchData.getCarList()));
-    }
+
     public static Car findFirstCar(List<Car> cars){
         return cars.stream().findFirst().orElseThrow();
     }
@@ -22,8 +20,8 @@ public class CarOpsFaraz {
         return cars.stream().findAny().orElseThrow();
     }
 
-    public static List<Car> removeDuplicatesBasedOnMakeAndModel(List<Car> cars){
-        List<Car> uniqueCarsBasedOnMakeAndModel = new ArrayList<>();
+    public static Set<Car> removeDuplicatesBasedOnMakeAndModel(List<Car> cars){
+        Set<Car> uniqueCarsBasedOnMakeAndModel = new HashSet<>();
         Map<String, List<Car>> makeAndModelToCarsMap = cars.stream().collect(Collectors.groupingBy(car->car.getMake()+ " " + car.getModel()));
         makeAndModelToCarsMap.forEach((makeAndModel,carz)->{
             uniqueCarsBasedOnMakeAndModel.add(carz.get(0));

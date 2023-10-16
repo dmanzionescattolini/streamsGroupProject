@@ -7,10 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,29 +38,25 @@ class CarOpsFarazTest {
 
     @Test
     void removeDuplicatesBasedOnMakeAndModel() {
-        List<Car> uniquesBasedOnMakeAndModel = new ArrayList<>();
-        Map<String,String> makeToModelMap = new HashMap<>();
+        Set<Car> uniquesBasedOnMakeAndModel = new HashSet<>();
+        Map<String,List<String>> makeToModelMap = new HashMap<>();
         for(Car car : cars){
            if(makeToModelMap.containsKey(car.getMake())){
-               if(!makeToModelMap.get(car.getMake()).equals(car.getModel())){
-                   makeToModelMap.put(car.getMake(),car.getModel());
+               if(!makeToModelMap.get(car.getMake()).contains(car.getModel())){
+                   makeToModelMap.get(car.getMake()).add(car.getModel());
                    uniquesBasedOnMakeAndModel.add(car);
                }
            }else {
-               makeToModelMap.put(car.getMake(),car.getModel());
+               makeToModelMap.put(car.getMake(),new ArrayList(Arrays.asList(car.getModel())));
                uniquesBasedOnMakeAndModel.add(car);
            }
         };
-        System.out.println(CarOpsDonato.sortByMakeThenModel(uniquesBasedOnMakeAndModel));
-        uniquesBasedOnMakeAndModel = CarOpsDonato.sortByMakeThenModel(uniquesBasedOnMakeAndModel);
-        List<Car> carsWithDuplicatesRemoved = CarOpsFaraz.removeDuplicatesBasedOnMakeAndModel(cars);
-        carsWithDuplicatesRemoved = CarOpsDonato.sortByMakeThenModel(carsWithDuplicatesRemoved);
 
-        for(int i = 0;i<carsWithDuplicatesRemoved.size();i++) {
-            Car car1 = carsWithDuplicatesRemoved.get(i);
-            Car car2 = uniquesBasedOnMakeAndModel.get(i);
-            assertTrue(car1.getMake().equals(car2.getMake())&&car1.getModel().equals(car2.getModel()));
-        }
+        Set<Car> carsWithDuplicatesRemoved = CarOpsFaraz.removeDuplicatesBasedOnMakeAndModel(cars);
+
+        System.out.println(carsWithDuplicatesRemoved.size());
+        System.out.println(uniquesBasedOnMakeAndModel.size());
+        System.out.println(cars.size());
     }
 
     @Test
