@@ -1,14 +1,10 @@
 package challenges;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import data.FetchData;
 import domain.Car;
 
-public class CarOps {
+public class CarOpsFaraz {
 
 
     public static Car findFirstCar(List<Car> cars){
@@ -37,7 +33,7 @@ public class CarOps {
 
 
     public static Map<String, Double> calculateTotalPriceByMake(List<Car> cars){
-            Map<String, List<Car>> carsByMake = groupByMake(cars);
+            Map<String, List<Car>> carsByMake = CarOpsDonato.groupByMake(cars);
             Map<String, Double> totalPriceByMake = new HashMap<>();
             carsByMake.forEach((make, carz)->{
                 totalPriceByMake.put(make, sumOfPrices(carz));
