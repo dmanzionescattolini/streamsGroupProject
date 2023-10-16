@@ -130,5 +130,70 @@ public class StudentOpsTest {
         		}
         	}
         }
+        
+        //Q6
+        @Test
+        void shouldReturnLargestAge() {
+        	double age = StudentOps.findMaximumAge(students);
+        	LocalDate min = students.get(0).getDob();
+        	for(Student s:students) {
+        		if (s.getDob().compareTo(min)<0) {
+        			min = s.getDob();
+        		}
+        	}
+        	Period p = min.until(LocalDate.now());
+        	double minAge = (p.getYears()*12+p.getMonths())/12.0;
+        	assertEquals(age,minAge);
+        }
+        
+        //Q7
+        @Test
+        void shouldMapIdToStudent() {
+        	Map<Integer,Student> m = StudentOps.transformToMap(students);
+        	for(Integer i:m.keySet()) {
+        		assertEquals(i,m.get(i).getId());
+        	}
+        }
+        
+        //Q8
+        @Test
+        void shouldGetListOfEmails() {
+        	List<String> emails = StudentOps.getStudentEmails(students);
+        	for(String e:emails) {
+        		assertTrue(e.contains("@"));
+        	}
+        }
+        
+        //Q9
+        void checkIfAnyStudentIsAdult() {
+        	boolean isAdult = StudentOps.checkIfAnyStudentIsAdult(students);
+        	Period p;
+        	for(Student s:students) {
+        		p = s.getDob().until(LocalDate.now());
+        		if(p.getYears()*12+p.getMonths()>18*12) {
+        			assertTrue(isAdult);
+        			return;
+        		}
+        	}
+        	assertFalse(isAdult);
+        }
+        
+        //Q10
+        void checkStudentGenderCount() {
+        	Map<String,Long> count = StudentOps.countStudentsByGender(students);
+        	for(Student s: students) {
+        		if(count.containsKey(s.getGender())){
+        			if(count.get(s.getGender())<=0) {
+        				assert false;
+        			}
+        			count.put(s.getGender(), count.get(s.getGender())-1);
+        		}else {
+        			assert false;
+        		}
+        	}
+        	for(String g:count.keySet()) {
+        		assertEquals(count.get(g),0);
+        	}
+        }
     }
 

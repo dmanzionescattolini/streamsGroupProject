@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class StudentOps {
@@ -35,5 +36,34 @@ public class StudentOps {
     //Q5
     public static Map<String, List<Student>> groupStudentsByGender(List<Student> students){
     	return students.stream().collect(Collectors.groupingBy(Student::getGender));
+    }
+    
+    //Q6
+    public static double findMaximumAge(List<Student> students) {
+    	Optional<Integer> eldest = students.stream().map(s->s.getDob().until(LocalDate.now())).map(p->12*p.getYears()+p.getMonths()).max(Comparator.naturalOrder());
+    	if(eldest.isEmpty()) {
+    		return 0.0;
+    	}
+    	return eldest.get()/12.0;
+    }
+    
+    //Q7
+    public static Map<Integer,Student> transformToMap(List<Student> students){
+    	return students.stream().collect(Collectors.toMap(Student::getId, s->s));
+    }
+    
+    //Q8
+    public static List<String> getStudentEmails(List<Student> students){
+    	return students.stream().map(s->s.getEmail()).toList();
+    }
+    
+    //Q9
+    public static boolean checkIfAnyStudentIsAdult(List<Student> students) {
+    	return students.stream().map(s->s.getDob().until(LocalDate.now())).map(p->12*p.getYears()+p.getMonths()).anyMatch(a->a>18);
+    }
+    
+    //Q10
+    public static Map<String,Long> countStudentsByGender(List<Student> students){
+    	return students.stream().collect(Collectors.groupingBy(Student::getGender,Collectors.counting()));
     }
 }
