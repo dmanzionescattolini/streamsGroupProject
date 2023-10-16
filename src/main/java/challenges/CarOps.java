@@ -35,12 +35,7 @@ public class CarOps {
         return Arrays.asList(cars.stream().filter(x->x.getPrice()<=N).toList(),cars.stream().filter(x->x.getPrice()>N).toList());
     }
 
-    public static Map<String,List<Car>> groupByMake(List<Car> cars){
-        return cars.stream().collect(Collectors.groupingBy(x->x.getMake()));
-    }
-    public static double sumOfPrices(List<Car> cars){
-        return cars.stream().mapToDouble(c->c.getPrice()).reduce((x,y)-> x+y).getAsDouble();
-    }
+
     public static Map<String, Double> calculateTotalPriceByMake(List<Car> cars){
             Map<String, List<Car>> carsByMake = groupByMake(cars);
             Map<String, Double> totalPriceByMake = new HashMap<>();
